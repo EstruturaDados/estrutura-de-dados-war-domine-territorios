@@ -1,0 +1,53 @@
+#include <stdio.h>
+#include <string.h>
+
+// Step 1: Create the Territory struct
+typedef struct {
+    char nome[50];
+    char cor_exercito[20];
+    int num_tropas;
+} Territorio;
+
+int main() {
+    // Step 2: Declare a static array of 5 territories
+    Territorio mapa[5];
+
+    // Step 3: Read data for each territory
+    printf("Bem-vindo ao Desafio WAR Estruturado - Nivel Novato!\n");
+    printf("Por favor, cadastre os 5 territorios:\n\n");
+
+    for (int i = 0; i < 5; i++) {
+        printf("--- Cadastro do Territorio %d ---\n", i + 1);
+
+        printf("Nome do territorio: ");
+        // Using fgets for safer string input
+        fgets(mapa[i].nome, sizeof(mapa[i].nome), stdin);
+        // Remove the newline character
+        mapa[i].nome[strcspn(mapa[i].nome, "\n")] = 0;
+
+        printf("Cor do exercito: ");
+        fgets(mapa[i].cor_exercito, sizeof(mapa[i].cor_exercito), stdin);
+        // Remove the newline character
+        mapa[i].cor_exercito[strcspn(mapa[i].cor_exercito, "\n")] = 0;
+
+        printf("Numero de tropas: ");
+        scanf("%d", &mapa[i].num_tropas);
+        // Consume the leftover newline character from the input buffer
+        while ((getchar()) != '\n');
+
+        printf("\n");
+    }
+
+    // Step 4: Display the current map state
+    printf("\n--- Estado Atual do Mapa ---\n");
+    printf("------------------------\n");
+    for (int i = 0; i < 5; i++) {
+        printf("Territorio %d:\n", i + 1);
+        printf("  Nome: %s\n", mapa[i].nome);
+        printf("  Cor: %s\n", mapa[i].cor_exercito);
+        printf("  Tropas: %d\n", mapa[i].num_tropas);
+        printf("------------------------\n");
+    }
+
+    return 0;
+}
