@@ -1,23 +1,80 @@
-# 🏰 Cadastro de Territórios
+# 🎮 Sistema War - Estruturas de Dados em C (Em Desenvolvimento)
 
-Este projeto foi feito para praticar o uso de **structs** em linguagem C.  
-A ideia é criar um pequeno sistema onde dá pra cadastrar 5 territórios, informando o nome, a cor do exército e a quantidade de tropas.  
-Depois que tudo é cadastrado, o programa mostra as informações na tela.
+Implementação em **Linguagem C** do clássico jogo War, desenvolvido como projeto acadêmico para aprendizagem de estruturas de dados.
 
----
+## 📋 Status do Projeto
+**🚧 Desenvolvimento em Andamento**  
+*Projeto acadêmico em evolução - versão atual implementa funcionalidades básicas*
 
-## 💡 O que o programa faz
+## 🎯 Funcionalidades Implementadas
 
-- Pede os dados de 5 territórios (nome, cor e tropas)  
-- Guarda tudo dentro de uma estrutura (`struct`)  
-- Mostra todos os territórios cadastrados no final  
+### ✅ **Concluídas:**
+- **♠️ Estrutura Básica do Baralho**: Criação e inicialização de cartas
+- **🔄 Sistema de Rodadas**: Controle básico de turnos entre jogadores
+- **⚔️ Mecânica de Batalhas Simples**: Comparação básica de cartas
+- **🏗️ Arquitetura Modular**: Separação em arquivos .c e .h
 
-É um exercício simples, mas ajuda bastante a entender como usar structs e funções em C.
+### 🔄 **Em Desenvolvimento:**
+- **🎯 Ponteiros e Alocação Dinâmica** *(próxima fase)*
+- **📊 Estruturas Complexas** (structs aninhadas)
+- **🎮 Interface Mais Elaborada**
+- **💾 Persistência de Dados**
 
----
+## 🛠 Tecnologias e Conceitos Aplicados
 
-## ⚙️ Como usar
+### **Dominados:**
+- **Linguagem C** (sintaxe, funções, arrays)
+- **Programação Modular** (múltiplos arquivos .c/.h)
+- **Estruturas Básicas** (arrays, variáveis)
+- **Controle de Fluxo** (loops, condicionais)
 
-1. Compile o programa:
-   ```bash
-   gcc territorios.c -o territorios
+### **Em Aprendizado:**
+- **Ponteiros e Alocação Dinâmica**
+- **Structs Complexas**
+- **Manipulação de Memória**
+- **Otimização de Código**
+
+## 🏗️ Arquitetura do Sistema
+war-Duffyjhon/
+├── 📁 src/
+│ ├── main.c # Função principal e menu
+│ ├── guerra.c # Lógica básica do jogo
+│ ├── guerra.h # Headers e protótipos
+│ ├── carta.c # Manipulação do baralho
+│ └── carta.h # Definições de cartas
+├── 📁 docs/
+│ └── relatorio.pdf # Documentação do projeto
+└── 📄 README.md # Este arquivo
+
+text
+
+## 🚀 Como Compilar e Executar
+
+```bash
+# Clone o repositório
+git clone https://github.com/EstruturaDados/war-Duffyjhon.git
+cd war-Duffyjhon
+
+# Compile o projeto
+gcc -o war src/main.c src/guerra.c src/carta.c
+
+# Execute
+./war
+💡 Objetivos de Aprendizado
+Este projeto representa minha jornada de aprendizado em Linguagem C e estruturas de dados. Atualmente foca nos fundamentos, com plano de evolução para:
+
+🎯 Próxima Fase: Implementar ponteiros e alocação dinâmica
+
+🚀 Fase Intermediária: Desenvolver estruturas de dados complexas
+
+🏆 Fase Avançada: Otimização e features adicionais
+
+📚 Contexto Acadêmico
+Projeto desenvolvido para a disciplina de Estruturas de Dados, representando meu progresso no domínio da Linguagem C e conceitos fundamentais de programação.
+
+👨💻 Autor
+João Vitor Mendonça
+Estudante de Análise e Desenvolvimento de Sistemas
+LinkedIn | GitHub
+
+"Este projeto reflete minha jornada de aprendizado em C - honesto sobre o progresso atual e comprometido com a evolução contínua."
