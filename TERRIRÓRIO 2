@@ -1,0 +1,38 @@
+#include <stdio.h>
+#include <string.h>
+
+//Definir a estrutura do território
+//armazenar nome, cor do exército e quantidade de tropas
+typedef struct{
+  char nome [30];
+  char cor [10];
+  int tropas;
+} Territórrio;
+
+//Defirnir quantidade de territórios
+int main () {
+  Território territórios [5];
+  int i;
+
+//Cadastrar territórios
+for (i=0; i<5; i++) {
+  printf ("Digite o nome do território %d:", i+1)
+  scanf ("%s", territórios [i].nome);
+
+  printf (Digite a cor do exército do território %d:", i+1);
+  scanf ("%s", territórios [i].cor);
+
+  printf ("Digite o número de tropas do território %d, i+1);
+  scanf ("%d", &territórios [i].tropas);
+  printf ("n");
+}
+
+//Mostrar os dados cadastrados
+printf ("Dados dos territórios cadastrados:\n");
+for (i=0; i<5; i++){
+  printf ("território %d: nome:%s, cor:%s, tropas:%d\n", 
+    i+1, territórios[i].nome, territórios[i].cor,territórios[i].tropas;
+}
+
+return 0;
+}
