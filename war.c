@@ -1,7 +1,7 @@
 // ============================================================================
 //         PROJETO WAR ESTRUTURADO - DESAFIO DE CÓDIGO
 // ============================================================================
-//        
+//
 // ============================================================================
 //
 // OBJETIVOS:
@@ -31,7 +31,57 @@
 
 // --- Função Principal (main) ---
 // Função principal que orquestra o fluxo do jogo, chamando as outras funções em ordem.
-int main() {
+#include <stdio.h>
+#include <string.h>
+//DEFINE AS CONSTANTES SIMBÓLICAS
+#define MAX_NAME 30
+#define MAX_COLOR 10
+#define MAX_TERRITORIES 5
+typedef struct
+{
+    char name[MAX_NAME];
+    char armyColor[MAX_COLOR];
+    int numberOfTroops;
+} Territory;
+
+int main()
+{
+    Territory territories[MAX_TERRITORIES];
+    int i;
+    printf("=============VAMOS CADASTRAR OS TERRITÓRIOS=============\n\n");
+
+    
+    
+    for(i = 0; i < MAX_TERRITORIES; i++){
+        //Território
+        printf("Território %d:\n", i+1);
+        printf("Digite o nome do território:\n");
+        fgets(territories[i].name, sizeof(territories[i].name),stdin);
+        territories[i].name[strcspn(territories[i].name, "\n")]= '\0';
+
+        //Cor do exército
+        printf("Digite a cor do exército:\n");
+        fgets(territories[i].armyColor, sizeof(territories[i].armyColor),stdin);
+        territories[i].armyColor[strcspn(territories[i].armyColor, "\n")]= '\0';
+
+        //Número de tropas
+        printf("Digite o número de tropas:\n");
+        scanf("%d", &territories[i].numberOfTroops);
+        getchar();//consome o '\n' que ficou no buffer.
+
+    };
+
+    //LISTA OS TERRITÓRIOS CADASTRADOS
+
+    printf("=============TERRITÓRIOS CADASTRADOS=============\n\n");
+    for(i = 0; i < MAX_TERRITORIES; i++){
+        printf("Nome: %s\n", territories[i].name);
+        printf("Cor do exército: %s\n", territories[i].armyColor);
+        printf("Número de tropas: %d\n", territories[i].numberOfTroops);
+        printf("------------------------------------------------------\n");
+    };
+
+
     // 1. Configuração Inicial (Setup):
     // - Define o locale para português.
     // - Inicializa a semente para geração de números aleatórios com base no tempo atual.
