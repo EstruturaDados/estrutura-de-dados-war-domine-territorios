@@ -1,0 +1,66 @@
+int main() {
+// 1. Inicialização do gerador de números aleatórios
+srand(time(NULL));
+
+// 2. Definição do vetor de missões (Requisito: pelo menos 5 descrições)
+char* modelosMissoes[] = {
+"Conquistar 3 territorios seguidos",
+"Eliminar todas as tropas da cor vermelha",
+"Dominar o continente sul",
+"Ocupar 5 territorios com pelo menos 2 tropas",
+"Destruir o exercito azul"
+};
+int totalMissoes = 5;
+
+// 3. Alocação Dinâmica (Requisito: malloc para missão e territórios)
+// Alocando espaço para a string da missão do jogador (ex: max 100 caracteres)
+char* missaoJogador = (char*) malloc(100 * sizeof(char));
+
+// Simulando um mapa com 3 territórios para o exemplo
+int totalTerritorios = 3;
+Territorio* mapa = (Territorio*) malloc(totalTerritorios * sizeof(Territorio));
+
+if (missaoJogador == NULL || mapa == NULL) {
+printf("Erro ao alocar memoria!\n");
+return 1;
+}
+
+// 4. Inicialização dos dados (Exemplo manual)
+strcpy(mapa[0].nome, "Brasil");
+strcpy(mapa[0].cor, "Verde");
+mapa[0].tropas = 10;
+
+strcpy(mapa[1].nome, "Argentina");
+strcpy(mapa[1].cor, "Azul");
+mapa[1].tropas = 5;
+
+// 5. Atribuição da Missão
+atribuirMissao(missaoJogador, modelosMissoes, totalMissoes);
+printf("Sua missao secreta: %s\n", missaoJogador);
+
+// 6. Loop Principal do Jogo (Simplificado)
+int jogoAtivo = 1;
+while (jogoAtivo) {
+printf("\n--- Novo Turno ---\n");
+
+// Exemplo de um ataque: Território 0 ataca o Território 1
+printf("Atacando de %s para %s...\n", mapa[0].nome, mapa[1].nome);
+atacar(&mapa[0], &mapa[1]);
+
+// 7. Verificação da Missão (Requisito: após cada turno)
+if (verificarMissao(missaoJogador, mapa, totalTerritorios)) {
+printf("\nPARABENS! Voce cumpriu sua missao e venceu o jogo!\n");
+jogoAtivo = 0;
+} else {
+// Apenas para não ficar em loop infinito neste exemplo,
+// vamos encerrar após um ataque ou você pode adicionar um menu.
+printf("Missao ainda nao cumprida.\n");
+jogoAtivo = 0;
+}
+}
+
+// 8. Finalização (Requisito: Função de liberação)
+liberarMemoria(mapa, missaoJogador);
+
+return 0;
+}

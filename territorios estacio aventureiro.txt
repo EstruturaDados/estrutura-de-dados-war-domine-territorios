@@ -1,0 +1,121 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+
+// Definição da Struct conforme Requisito
+typedef struct {
+char nome[30];
+char cor[10];
+int tropas;
+} Territorio;
+
+// Protótipos das funções (Modularização)
+void cadastrarTerritorios(Territorio* mapa, int quantidade);
+void exibirMapa(Territorio* mapa, int quantidade);
+void atacar(Territorio* atacante, Territorio* defensor);
+void liberarMemoria(Territorio* mapa);
+
+int main() {
+int qtd;
+srand(time(NULL)); // Inicializa a semente para números aleatórios
+
+printf("--- SIMULADOR DE BATALHA (ESTILO WAR) ---\n");
+printf("Quantos territorios deseja cadastrar? ");
+scanf("%d", &qtd);
+
+// Alocação Dinâmica de Memória
+Territorio* mapa = (Territorio*) malloc(qtd * sizeof(Territorio));
+if (mapa == NULL) {
+printf("Erro ao alocar memoria!\n");
+return 1;
+}
+
+cadastrarTerritorios(mapa, qtd);
+
+int op = -1;
+while (op != 0) {
+exibirMapa(mapa, qtd);
+printf("\n--- MENU DE ATAQUE ---\n");
+printf("1. Realizar Ataque\n");
+printf("0. Sair e Liberar Memoria\n");
+printf("Escolha: ");
+scanf("%d", &op);
+
+if (op == 1) {
+int idxAtacante, idxDefensor;
+printf("ID do Territorio Atacante (0 a %d): ", qtd - 1);
+scanf("%d", &idxAtacante);
+printf("ID do Territorio Defensor (0 a %d): ", qtd - 1);
+scanf("%d", &idxDefensor);
+
+// Validações Técnicas
+if (idxAtacante < 0 || idxAtacante >= qtd || idxDefensor < 0 || idxDefensor >= qtd) {
+printf("\n[ERRO] IDs invalidos!\n");
+} else if (strcmp(mapa[idxAtacante].cor, mapa[idxDefensor].cor) == 0) {
+printf("\n[ERRO] Voce nao pode atacar seu proprio territorio!\n");
+} else if (mapa[idxAtacante].tropas < 2) {
+printf("\n[ERRO] O atacante precisa de pelo menos 2 tropas para atacar!\n");
+} else {
+// Chamada da função usando ponteiros
+atacar(&mapa[idxAtacante], &mapa[idxDefensor]);
+}
+}
+}
+
+liberarMemoria(mapa);
+return 0;
+}
+
+// Implementação das Funções
+
+void cadastrarTerritorios(Territorio* mapa, int quantidade) {
+for (int i = 0; i < quantidade; i++) {
+printf("\nTerritorio %d:\n", i);
+printf("Nome: ");
+scanf("%s", mapa[i].nome);
+printf("Cor (Time): ");
+scanf("%s", mapa[i].cor);
+printf("Quantidade de tropas: ");
+scanf("%d", &mapa[i].tropas);
+}
+}
+
+void exibirMapa(Territorio* mapa, int quantidade) {
+printf("\n========= MAPA ATUAL =========");
+for (int i = 0; i < quantidade; i++) {
+printf("\nID: %d | %s | Cor: %s | Tropas: %d", i, mapa[i].nome, mapa[i].cor, mapa[i].tropas);
+}
+printf("\n==============================");
+}
+
+void atacar(Territorio* atacante, Territorio* defensor) {
+// Simulação de dados (1 a 6)
+int dadoAtacante = (rand() % 6) + 1;
+int dadoDefensor = (rand() % 6) + 1;
+
+printf("\n--- RESULTADO DOS DADOS ---");
+printf("\n%s jogou: %d", atacante->nome, dadoAtacante);
+printf("\n%s jogou: %d", defensor->nome, dadoDefensor);
+printf("\n---------------------------");
+
+if (dadoAtacante > dadoDefensor) {
+printf("\nVITORIA! %s conquistou %s!", atacante->nome, defensor->nome);
+
+// Atualização dos dados via ponteiro
+strcpy(defensor->cor, atacante->cor);
+defensor->tropas = atacante->tropas / 2;
+atacante->tropas -= defensor->tropas;
+} else {
+printf("\nDERROTA! O defensor resistiu e o atacante perdeu 1 tropa.");
+atacante->tropas--;
+}
+printf("\n");
+}
+
+void liberarMemoria(Territorio* mapa) {
+free(mapa);
+printf("\nMemoria desalocada. Programa encerrado.\n");
+}
+
+Obter o Outlook para Android

@@ -1,0 +1,50 @@
+#include <stdio.h>
+#include <string.h>
+
+// Definição da struct Territorio conforme os requisitos
+// Agrupa dados relacionados de um território em uma única estrutura
+struct Territorio {
+char nome[30];
+char cor[10];
+int tropas;
+};
+
+int main() {
+// Declaração de um vetor de structs para armazenar 5 territórios
+struct Territorio listaTerritorios[5];
+int i;
+
+printf("--- Cadastro de Territorios ---\n\n");
+
+// Laço de repetição (for) para entrada de dados
+for(i = 0; i < 5; i++) {
+printf("Digite os dados do territorio %d:\n", i + 1);
+
+printf("Nome: ");
+// Usando scanf para ler strings (conforme requisito técnico)
+// O %[^\n] permite ler espaços, e o getchar limpa o buffer
+scanf(" %[^\n]s", listaTerritorios[i].nome);
+
+printf("Cor do exercito: ");
+scanf(" %s", listaTerritorios[i].cor);
+
+printf("Quantidade de tropas: ");
+scanf("%d", &listaTerritorios[i].tropas);
+
+printf("\n");
+}
+
+// Laço de repetição para exibição dos dados cadastrados
+printf("--- Territorios Registrados ---\n");
+for(i = 0; i < 5; i++) {
+printf("Territorio %d: %s | Cor: %s | Tropas: %d\n",
+i + 1,
+listaTerritorios[i].nome,
+listaTerritorios[i].cor,
+listaTerritorios[i].tropas);
+}
+
+return 0;
+}
+
+Obter o Outlook para Android
