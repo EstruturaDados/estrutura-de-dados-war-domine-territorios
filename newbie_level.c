@@ -31,7 +31,7 @@
 
 // --- Função Principal (main) ---
 // Função principal que orquestra o fluxo do jogo, chamando as outras funções em ordem.
-int main() {
+// int main() {
     // 1. Configuração Inicial (Setup):
     // - Define o locale para português.
     // - Inicializa a semente para geração de números aleatórios com base no tempo atual.
@@ -51,8 +51,8 @@ int main() {
     // 3. Limpeza:
     // - Ao final do jogo, libera a memória alocada para o mapa para evitar vazamentos de memória.
 
-    return 0;
-}
+//     return 0;
+// }
 
 // --- Implementação das Funções ---
 
@@ -96,3 +96,91 @@ int main() {
 
 // limparBufferEntrada():
 // Função utilitária para limpar o buffer de entrada do teclado (stdin), evitando problemas com leituras consecutivas de scanf e getchar.
+
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_TROOP 5
+
+typedef struct{
+    char name[30];
+    char color[10];
+    int troop;
+} Territorio;
+
+void limparBufferEntrada(){
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF);
+}
+
+int main(){
+    Territorio territory[MAX_TROOP];
+    int totalTerritorio = 0;
+    int option;
+
+    do {
+        
+        printf("======================\n");
+        printf("    WAR GAME - Part I\n");
+        printf("======================\n");
+        
+        // Exibir tropas cadastradas
+        if(totalTerritorio > 0) {
+            printf("\nTROPAS CADASTRADAS:\n");
+            for(int i = 0; i < totalTerritorio; i++) {
+                printf("%s - %s - %d \n", 
+                    territory[i].name, territory[i].color, territory[i].troop);
+            }
+            printf("\n");
+        } else {
+            printf("\nNenhuma tropa cadastrada ainda.\n\n");
+        }
+        
+        printf("======================\n");
+        printf("1 - Cadastrar Tropa \n");
+    printf("0 - Para sair\n");
+    printf("Escolha uma opção: ");
+    scanf("%d", &option);
+    limparBufferEntrada();
+
+    switch (option){
+        case 1:
+            printf("\n=== Cadastrar Nova Tropa ===\n");
+
+            if(totalTerritorio < MAX_TROOP) {
+                printf("Digite o nome do território: ");
+                fgets(territory[totalTerritorio].name, 30, stdin);
+                territory[totalTerritorio].name[strcspn(territory[totalTerritorio].name, "\n")] = 0;
+
+                printf("Digite a cor da tropa: ");
+                fgets(territory[totalTerritorio].color, 10, stdin);
+                territory[totalTerritorio].color[strcspn(territory[totalTerritorio].color, "\n")] = 0;
+
+                printf("Digite o número de tropas: ");
+                scanf("%d", &territory[totalTerritorio].troop);
+                limparBufferEntrada();
+
+                totalTerritorio++;
+                printf("\n✓ Tropa cadastrada com sucesso!\n");
+            } else {
+                printf("Limite máximo de territórios atingido.\n");
+            }
+            printf("\nPressione Enter para continuar...");
+            getchar();
+            break;
+
+        case 0:
+            printf("Saindo do programa...\n");
+            break;
+
+        default:
+            printf("\nOpção inválida. Tente novamente.\n");
+            printf("Pressione Enter para continuar...");
+            getchar();
+            break;
+    }
+
+    } while (option != 0);
+
+    return 0;
+}
