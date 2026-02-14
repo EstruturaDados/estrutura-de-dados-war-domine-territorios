@@ -1,0 +1,62 @@
+//
+// Criado por Geise Severo Eduardo - Jogo WAR (Etapa 1)
+// Matéria: Estrutura de Dados em C
+// Graduações: Bacharelado e Ciências da Computação e Bacharelado em Engenharia de Software
+// Instituição: Estácio
+// Linguagem: C++
+
+#include <cstdio>   // Requisito: Entrada e saída padrão
+#include <cstring>  // Requisito: Manipulação de strings
+#include <cstdlib>
+
+#define NUM_TERRITORIOS 5 // Requisito: Cadastro de 5 territórios
+
+// Definição da struct conforme Requisito Funcional
+struct Territorio {
+    char nome[30];
+    char cor[10];
+    int tropas;
+};
+
+// Função para entrada de dados
+void cadastrarTerritorios(Territorio t[]) {
+    for(int i = 0; i < NUM_TERRITORIOS; i++) {
+        printf("\n--- Cadastro do %d de %d ---", i + 1, NUM_TERRITORIOS);
+
+        printf("\nDigite o nome do territorio: ");
+        scanf("%s", t[i].nome); // Requisito: Uso de scanf [cite: 26]
+
+        printf("Digite a cor do exercito: ");
+        scanf("%s", t[i].cor);
+
+        printf("Digite a quantidade de tropas: ");
+        scanf("%d", &t[i].tropas);
+    }
+}
+
+// Função para exibir os dados
+void exibirTerritorios(Territorio t[]) {
+    printf("\n\n================================================");
+    printf("\n      DADOS DOS TERRITORIOS CADASTRADOS");
+    printf("\n===============================================\n");
+
+    for(int i = 0; i < NUM_TERRITORIOS; i++) {
+
+        printf("Territorio: %-15s | Cor: %-10s | Tropas: %d\n",
+               t[i].nome,
+               t[i].cor,
+               t[i].tropas);
+    }
+}
+
+// Função Principal
+int main() {
+    // Declaração do vetor de structs
+    Territorio listaTerritorios[NUM_TERRITORIOS];
+
+    // Execução do fluxo solicitado
+    cadastrarTerritorios(listaTerritorios);
+    exibirTerritorios(listaTerritorios);
+
+    printf("\n\nPressione qualquer tecla para sair...");
+    return 0;

@@ -1,0 +1,154 @@
+// Criado por Geise Severo Eduardo - Jogo WAR (Etapa 2)
+// Matéria: Estrutura de Dados em C
+// Graduações: Bacharelado e Ciências da Computação e Bacharelado em Engenharia de Software
+// Instituição: Estácio
+// Linguagem: C++
+
+#include <cstdio>
+#include <cstring>
+#include <cstdlib>
+#include <ctime>
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+//definindo as cores dos territórios no sistema ANSI
+#define RED         "\x1b[31m"
+#define GREEN        "\x1b[32m"
+#define YELLOW       "\x1b[33m"
+#define PINK         "\x1b[35m"
+#define WHITE        "\x1b[37m"
+#define LIGHT_PURPLE "\x1b[95m"
+#define Blue         "\x1b[34m"
+#define Cyan         "\x1b[36m"
+#define RESET        "\x1b[0m"
+
+// Definição da struct conforme Requisito Funcional
+struct Territorio {
+    char nome[30];
+    char cor[20];
+    int tropas;
+};
+// Protótipos das funções
+    void atacar(Territorio* atacante, Territorio* defensor);
+    bool verificarVencedorGeral (Territorio* mapa, int n);
+    void exibirTabuleiro(Territorio* mapa, int n);
+    void autoPreencher(Territorio* mapa, int n);
+
+
+// Função Principal
+int main(){
+
+    srand(time(NULL)); // tem a função de garantir aleatoriedade
+    int n;
+
+    cout << LIGHT_PURPLE << "===================================================" <<  endl;
+    cout << "WAR ESTRUTURADO - ETAPA 2 : EDIÇÃO ESPECIAL C++---" << endl;
+    cout << "===================================================" << RESET << endl;
+
+    cout << "Quantos Territórios no mapa-mundi?";
+    cin >> n;
+
+    //Alocação dinâmica de territórios com Malloc
+    Territorio* mapa = (Territorio*) malloc(n * sizeof(Territorio));
+
+    if (mapa == NULL)    {
+        cout << "Erro: Memoria Insuficiente!" << endl;
+        return 1;
+    }
+
+    autoPreencher(mapa, n);
+
+    int opcao = -1;
+    while (opcao !=0) {
+        exibirTabuleiro(mapa, n);
+
+        cout << LIGHT_PURPLE << "\n[1] Atacar | [0] Sair: " << RESET;
+        cin >> opcao;
+
+        if (opcao == 1) {
+            int atq, def;
+            cout << "ID Atacante: "; cin >> atq;
+            cout << "ID Defensor: "; cin >> def;
+
+            if (atq >= 0 && atq < n && def >= 0 && def < n)   {
+                if (strcmp(mapa[atq].cor, mapa[def].cor) == 0) {
+                    //Validação:Não atacar a própria cor
+                    cout << RED << "Erro: Você não pode atacar sua própria cor!" << RESET << endl;
+                } else {
+                    atacar(&mapa[atq], &mapa[def]);
+                }
+            } else {
+                cout << RED << "Índices fora do mapa" << RESET << endl;
+            }
+            if (verificarVencedorGeral(mapa, n)) {
+                exibirTabuleiro(mapa, n);
+                cout << GREEN << "\nDOMINIAÇÃO TOTAL ATINGIDA!" << RESET << endl;
+                break;
+            }
+        }
+    }
+
+    // Liberando memória com FREE
+    free(mapa);
+    cout << "\n[SISTEMA] Memória Liberada com free (). Fim de Jogo!" << endl;
+
+    return 0;
+}
+void atacar(Territorio* atacante, Territorio* defensor) {
+    int dadoAtq = (rand() %6) + 1;
+    int dadoDef = (rand() %6) + 1;
+
+    cout << WHITE << "\nBatalha : " << atacante-> nome << " vs " << defensor->nome<< RESET << endl;
+    cout << "Dados: Atacante [" << dadoAtq << "] | Defensor [" <<dadoDef <<"]" << endl;
+
+    if (dadoAtq > dadoDef){
+        cout << GREEN << "VITÓRIA! O território foi conquistado" << RESET << endl;
+        strcpy(defensor->cor, atacante->cor);
+        defensor->tropas = atacante->tropas / 2;
+        atacante->tropas -= defensor->tropas;
+    } else
+    {
+        cout << RED << "DERROTA! O ataque falhou e você perdeu 1 tropa." << RESET << endl;
+        if (atacante->tropas > 1) atacante->tropas--;
+        }
+    }
+void exibirTabuleiro(Territorio* mapa, int n) {
+        cout << "\n--- STATUS DO TABULEIRO ---" << endl;
+        for (int i = 0; i < n; i++) {
+            // Escolhe a cor do quadradinho baseada no nome da cor
+            string corAnsi = WHITE;
+            if (strcmp(mapa[i].cor, "Lilas") == 0) corAnsi = LIGHT_PURPLE;
+            else if (strcmp(mapa[i].cor, "Rosa") == 0) corAnsi = PINK;
+            else if (strcmp(mapa[i].cor, "Branco") == 0) corAnsi = WHITE;
+            else if (strcmp (mapa[i].cor, "Amarelo") == 0) corAnsi = YELLOW;
+            else if (strcmp (mapa[i].cor, "Vermelho") ==0) corAnsi = RED;
+            else if (strcmp (mapa[i].cor, "Verde") == 0) corAnsi = GREEN;
+            else if (strcmp (mapa[i].cor, "Ciano") == 0) corAnsi = Cyan;
+            else if (strcmp (mapa[i].cor, "Azul") == 0) corAnsi = Blue;
+
+            // Desenha o quadradinho colorido ■
+            cout << "[" << i << "] " << corAnsi << "■ " << RESET
+                 << (i < 10 ? " " : "") << mapa[i].nome // Alinhamento simples
+                 << " | Tropas: " << mapa[i].tropas << endl;
+        }
+    }
+
+void autoPreencher(Territorio* mapa, int n) {
+        const char* paises[] = {"Brasil", "Egito", "Japao", "Canada", "Italia", "Russia", "India", "China"};
+        const char* cores[] = {"Lilas", "Rosa", "Branco", "Amarelo", "Vermelho", "Verde", "Ciano", "Azul"};
+        for (int i = 0; i < n; i++) {
+            sprintf(mapa[i].nome, "%s_%d", paises[i % 8], i);
+            strcpy(mapa[i].cor, cores[i % 3]);
+            mapa[i].tropas = (rand() % 10) + 5;
+        }
+    }
+
+bool verificarVencedorGeral(Territorio* mapa, int n)
+    {
+        for (int i = 1; i < n; i++) {
+            if (strcmp(mapa[i].cor, mapa[0].cor) != 0) return false;
+        }
+        return true;
+    }
