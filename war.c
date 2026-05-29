@@ -15,12 +15,20 @@
 // ============================================================================
 
 // Inclusão das bibliotecas padrão necessárias para entrada/saída, alocação de memória, manipulação de strings e tempo.
+#include <stdio.h>
 
 // --- Constantes Globais ---
 // Definem valores fixos para o número de territórios, missões e tamanho máximo de strings, facilitando a manutenção.
+#define MAX_TERRITORIES 2
+#define STRING_SIZE 100
 
 // --- Estrutura de Dados ---
 // Define a estrutura para um território, contendo seu nome, a cor do exército que o domina e o número de tropas.
+typedef struct {
+    char name[STRING_SIZE];
+    char color[STRING_SIZE];
+    int armySize;
+} Territory;
 
 // --- Protótipos das Funções ---
 // Declarações antecipadas de todas as funções que serão usadas no programa, organizadas por categoria.
@@ -28,10 +36,41 @@
 // Funções de interface com o usuário:
 // Funções de lógica principal do jogo:
 // Função utilitária:
+void print_territory(Territory t);
+void clean_buffer();
 
 // --- Função Principal (main) ---
 // Função principal que orquestra o fluxo do jogo, chamando as outras funções em ordem.
 int main() {
+    Territory territories[MAX_TERRITORIES];
+
+    printf("==================================\n\n");
+    printf("Vamos cadastrar os %d territórios iniciais do nosso mundo.\n\n", MAX_TERRITORIES);
+
+    for (int i = 0; i < MAX_TERRITORIES; i++) {
+        printf("--- Cadastrando Território %d ---\n", i + 1);
+
+        printf("Nome do território: ");
+        fgets(territories[i].name, STRING_SIZE, stdin);
+
+        printf("Cor do território: ");
+        fgets(territories[i].color, STRING_SIZE, stdin);
+
+        printf("Tamanho do exército: ");
+        scanf("%d", &territories[i].armySize);
+        clean_buffer();
+
+        printf("\n");
+    }
+
+    printf("--- Apresentação dos territórios ---\n");
+
+    for (int i = 0; i < MAX_TERRITORIES; i++) {
+        printf("Território %d\n", i + 1);
+        print_territory(territories[i]);
+        printf("\n\n");
+    }
+
     // 1. Configuração Inicial (Setup):
     // - Define o locale para português.
     // - Inicializa a semente para geração de números aleatórios com base no tempo atual.
@@ -73,6 +112,11 @@ int main() {
 // exibirMapa():
 // Mostra o estado atual de todos os territórios no mapa, formatado como uma tabela.
 // Usa 'const' para garantir que a função apenas leia os dados do mapa, sem modificá-los.
+void print_territory(Territory t) {
+    printf("Nome: %s", t.name);
+    printf("Cor: %s", t.color);
+    printf("Tamanho do Exército: %d", t.armySize);
+}
 
 // exibirMissao():
 // Exibe a descrição da missão atual do jogador com base no ID da missão sorteada.
@@ -96,3 +140,7 @@ int main() {
 
 // limparBufferEntrada():
 // Função utilitária para limpar o buffer de entrada do teclado (stdin), evitando problemas com leituras consecutivas de scanf e getchar.
+void clean_buffer() {
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF);
+}
